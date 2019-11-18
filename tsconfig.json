@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "lib": ["es6", "dom"],
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "allowJs": false,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "noUnusedLocals": false,
+    "declaration": false,
+    "noUnusedParameters": false,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "types": ["reflect-metadata"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*"]
+}
