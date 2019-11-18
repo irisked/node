@@ -21,7 +21,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.1",
     "koa-router": "^7.4.0",
-    "mongoose": "^5.6.5",
+    "mongoose": ">=5.7.5",
     "reflect-metadata": "^0.1.13",
     "tracer": "^0.9.8"
   },
