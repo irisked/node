@@ -7,6 +7,5 @@ export interface Update {
 }
 
 export interface Options {
-  new?: boolean;
-  multi?: boolean;
+  [key: string]: any;
 }

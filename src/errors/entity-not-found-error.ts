@@ -1,11 +1,13 @@
 import { ErrorOptions } from "./error-options";
 import { ServerError } from "./server-error";
+import { HTTP_STATUS } from "./statuses";
+import { ERROR_CODE } from "./codes";
 
 export class EntityNotFoundError extends ServerError {
   public name: string = "EntityNotFoundError";
   public message: string = "Entity not found error.";
-  public status: number = 404;
-  public code: number = 404;
+  public status: number = HTTP_STATUS.BAD_REQUEST;
+  public code: number = ERROR_CODE.NOT_FOUND;
 
   constructor(options?: ErrorOptions) {
     super();

@@ -1,28 +1,67 @@
 import { Criteria, Update, Options } from "../../interfaces";
-import { ROLE } from "../../../models/roles";
 
 export type QueryOption = (query: Query) => void;
 
 export interface Query {
   getCriteria(): Criteria;
-  getOptions(): Options | undefined;
+  includeDeleted(flag: boolean);
 }
 
-export class DefaultQuery implements Query {
+export interface UpdateQuery extends Query {
+  getOptions(): Options;
+  getUpdate(): Update;
+}
+
+export class DefaultReadQuery implements Query {
 
   private criteria: Criteria;
-  private options?: Options;
 
-  constructor(criteria: Criteria, options?: Options) {
+  constructor(criteria: Criteria) {
     this.criteria = criteria;
+  }
+
+  public includeDeleted(flag: boolean) {
+    if (flag) {
+      delete this.criteria.isDeleted;
+    } else {
+      this.criteria = Object.assign(this.criteria, { isDeleted: false });
+    }
+  }
+
+  public getCriteria(): Criteria {
+    return this.criteria;
+  }
+}
+
+export class DefaultUpdateQuery implements UpdateQuery {
+
+  private criteria: Criteria;
+  private update: Update;
+  private options: Options;
+
+  constructor(criteria: Criteria, update: Update, options: Options) {
+    this.update = update;
     this.options = options;
+    this.criteria = criteria;
+  }
+
+  public includeDeleted(flag: boolean) {
+    if (flag) {
+      delete this.criteria.isDeleted;
+    } else {
+      this.criteria = Object.assign(this.criteria, { isDeleted: false });
+    }
   }
 
   public getCriteria(): Criteria {
     return this.criteria;
   }
 
-  public getOptions(): Criteria | undefined {
+  public getOptions(): Options {
     return this.options;
+  }
+
+  public getUpdate(): Update {
+    return this.update;
   }
 }

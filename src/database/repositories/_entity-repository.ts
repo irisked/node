@@ -1,9 +1,11 @@
-import { Model, Document, model } from "mongoose";
-import { EntityNotFoundError } from "../../errors";
+import { Model, Document, model, Error } from "mongoose";
+import { EntityNotFoundError, ValidationError, DuplicateError } from "../../errors";
 import { Criteria, Update, Options } from "../interfaces";
 import { BaseModel } from "../../models/_model";
 import { Repository } from "./_repository";
 import { injectable, unmanaged } from "inversify";
+import { logger } from "../../logger";
+import { MongoError } from "mongodb";
 
 @injectable()
 export abstract class EntityRepository<DomainModel extends BaseModel,
@@ -18,8 +20,16 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
 
   async create(data: DomainModel): Promise<MongooseDocument> {
     try {
-      return this.Model.create(data);
+      console.log(this.Model.schema);
+      const document = await this.Model.create(data);
+      return document;
     } catch (error) {
+      if (error instanceof Error.ValidationError) {
+        throw ValidationError.fromMongoose(error);
+      }
+      if (error instanceof MongoError && error.code === 11000) {
+        throw DuplicateError.fromMongoose(error);
+      }
       throw error;
     }
   }
