@@ -9,18 +9,17 @@ import { MongoError } from "mongodb";
 
 @injectable()
 export abstract class EntityRepository<DomainModel extends BaseModel,
-                                      MongooseDocument extends Document,
-                                      MongooseModel extends Model<MongooseDocument>>
-                                      implements Repository<DomainModel, MongooseDocument> {
-  private Model: MongooseModel;
+                                      EntityDocument extends Document,
+                                      EntityModel extends Model<EntityDocument>>
+                                      implements Repository<DomainModel, EntityDocument> {
+  private Model: EntityModel;
 
-  constructor(@unmanaged() Model: MongooseModel) {
+  constructor(@unmanaged() Model: EntityModel) {
     this.Model = Model;
   }
 
-  async create(data: DomainModel): Promise<MongooseDocument> {
+  async create(data: DomainModel): Promise<EntityDocument> {
     try {
-      console.log(this.Model.schema);
       const document = await this.Model.create(data);
       return document;
     } catch (error) {
@@ -34,7 +33,7 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
     }
   }
 
-  async read(criteria: Criteria): Promise<MongooseDocument> {
+  async read(criteria: Criteria): Promise<EntityDocument> {
     try {
       const entity = await this.Model.findOne(criteria);
       if (!entity) throw new EntityNotFoundError();
@@ -44,7 +43,7 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
     }
   }
 
-  async readMany(criteria: Criteria): Promise<MongooseDocument[]> {
+  async readMany(criteria: Criteria): Promise<EntityDocument[]> {
     try {
       const entity = await this.Model.find(criteria);
       return entity;
@@ -53,7 +52,7 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
     }
   }
 
-  async update(criteria: Criteria, update: Update, options?: Options): Promise<MongooseDocument> {
+  async update(criteria: Criteria, update: Update, options?: Options): Promise<EntityDocument> {
     try {
       if (options) {
         const entity = await this.Model.update(criteria, update, options);
@@ -69,7 +68,7 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
     }
   }
 
-  async updateMany(criteria: Criteria, update: Update, options?: Options): Promise<MongooseDocument[]> {
+  async updateMany(criteria: Criteria, update: Update, options?: Options): Promise<EntityDocument[]> {
     try {
       if (options) {
         const entities = await this.Model.update(criteria, update, Object.assign(options, { multi: true }));
@@ -83,7 +82,7 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
     }
   }
 
-  async remove(criteria: Criteria): Promise<MongooseDocument> {
+  async remove(criteria: Criteria): Promise<EntityDocument> {
     try {
       return this.update(criteria, { $set: { isDeleted: true } });
     } catch (error) {
@@ -91,7 +90,7 @@ export abstract class EntityRepository<DomainModel extends BaseModel,
     }
   }
 
-  async removeMany(criteria: Criteria): Promise<MongooseDocument[]> {
+  async removeMany(criteria: Criteria): Promise<EntityDocument[]> {
     try {
       return this.updateMany(criteria, { $set: { isDeleted: true } });
     } catch (error) {

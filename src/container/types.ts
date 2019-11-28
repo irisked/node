@@ -4,11 +4,14 @@ export const TYPES = {
   DB_CONNECTION_OPTIONS: Symbol.for("DB_CONNECTION_OPTIONS"),
   DATABASE: Symbol.for("DATABASE"),
   REPOSITORY: Symbol.for("REPOSITORY"),
-  CONTROLLER: Symbol.for("CONTROLLER"),
-  ADAPTER: Symbol.for("ADAPTER"),
-  SELECTOR: Symbol.for("SELECTOR")
+  CONTROLLER: Symbol.for("CONTROLLER")
 };
 
 export const TARGETS = {
-
+  CLUB_SERVICE: Symbol.for("CLUB_SERVICE"),
+  COACH_SERVICE: Symbol.for("COACH_SERVICE"),
+  EVENT_SERVICE: Symbol.for("EVENT_SERVICE"),
+  EVENT_TEMPLATE_SERVICE: Symbol.for("EVENT_TEMPLATE_SERVICE"),
+  HALL_SERVICE: Symbol.for("HALL_SERVICE"),
+  MANAGER_SERVICE: Symbol.for("MANAGER_SERVICE")
 };

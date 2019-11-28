@@ -13,6 +13,7 @@
   "author": "irisk",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^16.1.8",
     "@koa/cors": "^3.0.0",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",

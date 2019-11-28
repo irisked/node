@@ -35,6 +35,7 @@ constructor(@inject(TYPES.DB_CONNECTION_OPTIONS) options: DatabaseConnectionOpti
       Mongoose.connection.once("connected", () => {
         this.logger.info("CONNECTED TO DB.");
       });
+      Mongoose.set("useCreateIndex", true);
       const mongoose = await Mongoose.connect(this.address(), { useNewUrlParser: true });
       return mongoose.connection;
     } catch (error) {
