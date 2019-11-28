@@ -16,10 +16,10 @@ export const documentEventsFor = (document: string): DocumentEventsFor => {
       return `${document}:${DOCUMENT_EVENTS.CREATED}`;
     },
     UPDATED: (): string => {
-      return `${document}:${DOCUMENT_EVENTS.CREATED}`;
+      return `${document}:${DOCUMENT_EVENTS.UPDATED}`;
     },
     DELETED: (): string => {
-      return `${document}:${DOCUMENT_EVENTS.CREATED}`;
+      return `${document}:${DOCUMENT_EVENTS.DELETED}`;
     },
   };
 };
